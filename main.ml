@@ -86,3 +86,18 @@ let rec flatten l =
     | Many h :: t -> aux (aux acc h) t
   in
   aux [] l |> rev;;
+
+
+(* Eliminate Duplicates
+  Eliminate consecutive duplicates of list elements *)
+let rec compress = function
+    | a :: (b :: t) -> if a = b then compress (b::t) else a :: compress (b::t)
+    | x -> x
+
+
+(* this way is more efficient since "as t" makes a binding
+https://stackoverflow.com/questions/26769403/as-keyword-in-ocaml
+*)
+let rec compress = function
+    | a :: (b :: _ as t) -> if a = b then compress t else a :: compress t
+    | x -> x
