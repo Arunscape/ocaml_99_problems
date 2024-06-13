@@ -101,3 +101,16 @@ https://stackoverflow.com/questions/26769403/as-keyword-in-ocaml
 let rec compress = function
     | a :: (b :: _ as t) -> if a = b then compress t else a :: compress t
     | x -> x
+
+
+(* Pack Consecutive Duplicates *)
+let pack l =
+  let rec aux curr acc = function
+    | [] -> []
+    | [x] -> (x::curr) :: acc
+    | a :: (b :: _ as t) -> 
+      if a = b then aux (a::curr) acc t
+      else aux [] ((a::curr) :: acc) t (* new current list *)
+  in
+  aux [] [] l |> rev
+
